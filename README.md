@@ -5,8 +5,8 @@ Freight Cost Prediction and Invoice Risk Flagging
 ---
 
 ## 📌 Table of Contents
-- <a href="#Project Overview">Project Overview</a>
-- <a href="#Business Objective">Business Objectives</a>
+- <a href="#project overview">Project Overview</a>
+- <a href="#business objective">Business Objectives</a>
 - <a href="#data sources">Data Sources</a>
 - <a href="#Exploratory Data Analysis">Exploratory Data Analysis</a>
 - <a href="#Models Used">Models Used</a>

@@ -29,7 +29,7 @@ This project implements an end-to-end machine learning system designed to suppor
 # 1. Freight Cost Prediction (Regression)
 
 **Objective:**
-Predict the expected freight cost for a vendor invoice using quantity, invoice value, and historical behavior.
+Predict the expected freight cost for a vendor invoice using invoice value, and historical behavior.
 
 **Why it matters:**
 * Freight is a non-trivial component of landed cost.

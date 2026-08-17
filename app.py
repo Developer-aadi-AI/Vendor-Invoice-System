@@ -51,22 +51,12 @@ if selected_model == "Freight Cost Prediction":
 
     st.markdown ("""
     **Objective:**
-    Predict freight cost for a vendor invoice using **Quantity** and **Invoice Dollars**
+    Predict freight cost for a vendor invoice using **Invoice Dollars**
     to support budgeting, forecasting, and vendor negotiations.
     """)
 
-    with st.form("Freight Form"):
-        col1, col2 = st.columns(2)
-
-        with col1:
-            quantity = st.number_input(
-                "Quantity",
-                min_value = 1,
-                value = 1200
-            )
-
-        with col2:
-            dollars = st.number_input(
+    with st.form("Freight Form"):    
+        dollars = st.number_input(
                 "Invoice Dollars",
                 min_value = 1.0,
                 value = 18500.0

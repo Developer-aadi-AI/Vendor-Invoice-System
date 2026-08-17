@@ -1,126 +1,149 @@
 
-# 🧾 Vendor Performance Analysis – Retail Inventory & Sales
+# 🧾 Vendor Invoice Intelligence System
 
-_Analyzing vendor efficiency and profitability to support strategic purchasing and inventory decisions using SQL, Python, and Power BI._
-
+Freight Cost Prediction and Invoice Risk Flagging
 ---
 
 ## 📌 Table of Contents
-- <a href="#overview">Overview</a>
-- <a href="#business-problem">Business Problem</a>
-- <a href="#dataset">Dataset</a>
-- <a href="#tools--technologies">Tools & Technologies</a>
+- <a href="#Project Overview">Project Overview</a>
+- <a href="#Business Objective">Business Objectives</a>
+- <a href="#data sources">Data Sources</a>
+- <a href="#Exploratory Data Analysis">Exploratory Data Analysis</a>
+- <a href="#Models Used">Models Used</a>
+- <a href="#Evaluation Metrics">Evaluation Metrics</a>
+- <a href="#Application">Application</a>
 - <a href="#project-structure">Project Structure</a>
-- <a href="#data-cleaning--preparation">Data Cleaning & Preparation</a>
-- <a href="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a>
-- <a href="#research-questions--key-findings">Research Questions & Key Findings</a>
-- <a href="#dashboard">Dashboard</a>
-- <a href="#how-to-run-this-project">How to Run This Project</a>
-- <a href="#final-recommendations">Final Recommendations</a>
+- <a href="#How to run this project">How to run this project</a>
 - <a href="#author--contact">Author & Contact</a>
 
 ---
-<h2><a class="anchor" id="overview"></a>Overview</h2>
+<h2><a class="anchor" id="Project Overview"></a>Project Overview</h2>
 
-This project evaluates vendor performance and retail inventory dynamics to drive strategic insights for purchasing, pricing, and inventory optimization. A complete data pipeline was built using SQL for ETL, Python for analysis and hypothesis testing, and Power BI for visualization.
+This project implements an end-to-end machine learning system designed to support finance teams by:
+
+1. Predicting expected freight cost for vendor invoices.
+2. Flagging high-risk invoices that require manual review due to abnormal cost, freight, or operational patterns.
+---
+<h2><a class="anchor" id="Business Objective"></a>Business Objective</h2>
+
+# 1. Freight Cost Prediction (Regression)
+
+**Objective:**
+Predict the expected freight cost for a vendor invoice using quantity, invoice value, and historical behavior.
+
+**Why it matters:**
+* Freight is a non-trivial component of landed cost.
+* Poor freight estimation impacts margin analysis and budgeting.
+* Early prediction improves procurement planning and vendor negotiation.
+![Freight Cost Snapshot ](images/Freight_Cost.png)
+
+# 2. Invoice Risk Flagging (Classification)
+
+
+**Objective:**
+Predict whether a vendor invoice should be flagged for manual approval due to abnormal cost, freight, or delivery
+patterns.
+**Why it matters:**
+* Manual invoice review does not scale.
+* Financial leakage often occurs in large or complex invoices.
+* Early risk detection improves audit efficiency and operational control.
+![Invoice Flagging Snapshot](images/Flagging_System.png)
 
 ---
-<h2><a class="anchor" id="business-problem"></a>Business Problem</h2>
+<h2><a class="anchor" id="Data Sources"></a>Data Sources</h2>
 
-Effective inventory and sales management are critical in the retail sector. This project aims to:
-- Identify underperforming brands needing pricing or promotional adjustments
-- Determine vendor contributions to sales and profits
-- Analyze the cost-benefit of bulk purchasing
-- Investigate inventory turnover inefficiencies
-- Statistically validate differences in vendor profitability
+Data is stored in a relational SQLite database (inventory.db) with the following tables:
 
----
-<h2><a class="anchor" id="dataset"></a>Dataset</h2>
+*   **vendor_invoice** - Invoice-level financial and timing data
+*   **purchases** - Item-level purchase details
+*   **purchase_prices** - Reference purchase prices
+*   **begin_inventory**, **end_inventory** - Inventory snapshots
 
-- Multiple CSV files located in `/data/` folder (sales, vendors, inventory)
-- Summary table created from ingested data and used for analysis
-
+SQL aggregation is used to generate invoice-level features.
 ---
 
-<h2><a class="anchor" id="tools--technologies"></a>Tools & Technologies</h2>
+<h2><a class="anchor" id="Exploratory Data Analysis"></a>Exploratory Data Analysis</h2>
 
-- SQL (Common Table Expressions, Joins, Filtering)
-- Python (Pandas, Matplotlib, Seaborn, SciPy)
-- Power BI (Interactive Visualizations)
-- GitHub
+EDA focuses on business-driven questions, such as:
+* Do flagged invoices have higher financial exposure?
+* Does freight scale linearly with quantity?
+* Does freight cost depend on quantity?
+Statistical tests (t-tests) are used to confirm that flagged invoices differ meaningfully from normal invoices.
 
 ---
-<h2><a class="anchor" id="project-structure"></a>Project Structure</h2>
+<h2><a class="anchor" id="Models Used"></a>Models Used</h2>
+
+# Regression (Freight Prediction)
+
+* Linear Regression (baseline)
+* Decision Tree Regressor
+* Random Forest Regressor (final model)
+
+# Classification (Invoice Flagging)
+
+* Logistic Regression (baseline)
+* Decision Tree Classifier
+* Random Forest Classifier (final model with GridSearchCV)
+
+Hyperparameter tuning is performed using GridSearchCV with F1-score to handle class imbalance.
+---
+<h2><a class="anchor" id="Evaluation Metrics"></a>Evaluation Metrics</h2>
+
+# Freight Prediction
+* MAE
+* RMSE
+* R² Score
+
+# Invoice Flagging
+* Accuracy
+* Precision, Recall, F1-score
+* Classification report
+* Feature importance analysis
+---
+<h2><a class="anchor" id="Application"></a>Application</h2>
+A Streamlit application demonstrates the complete pipeline:
+* Input invoice details
+* Predict expected freight
+* Flag invoices in real time
+* Provide human-readable explanations
+
+---
+<h2><a class="anchor" id="project-structure"></a>project-structure</h2>
 
 ```
-vendor-performance-analysis/
+inventory-invoice-analytics/
 │
+├── data/
+│   └── inventory.db
+│
+├── freight_cost_prediction/
+│   ├── data_preprocessing.py
+│   ├── model_evaluation.py
+│   └── train.py
+│
+├── invoice_flagging/
+│   ├── data_preprocessing.py
+│   ├── model_evaluation.py
+│   └── train.py
+│
+├── inference/
+│   ├── predict_freight.py
+│   └── predict_invoice_flag.py
+│
+├── models/
+│   ├── predict_freight_model.pkl
+│   ├── scaler.pkl
+│   └── predict_flag_invoice.pkl
+│
+├── notebooks/
+│   ├── Invoice Flagging.pkl
+│   └── Predict Freight Cost.ipynb
+│
+├── app.py
 ├── README.md
-├── .gitignore
-├── requirements.txt
-├── Vendor Performance Report.pdf
-│
-├── notebooks/                  # Jupyter notebooks
-│   ├── exploratory_data_analysis.ipynb
-│   ├── vendor_performance_analysis.ipynb
-│
-├── scripts/                    # Python scripts for ingestion and processing
-│   ├── ingestion_db.py
-│   └── get_vendor_summary.py
-│
-├── dashboard/                  # Power BI dashboard file
-│   └── vendor_performance_dashboard.pbix
+└── .gitignore
 ```
 
----
-<h2><a class="anchor" id="data-cleaning--preparation"></a>Data Cleaning & Preparation</h2>
-
-- Removed transactions with:
-  - Gross Profit ≤ 0
-  - Profit Margin ≤ 0
-  - Sales Quantity = 0
-- Created summary tables with vendor-level metrics
-- Converted data types, handled outliers, merged lookup tables
-
----
-<h2><a class="anchor" id="exploratory-data-analysis-eda"></a>Exploratory Data Analysis (EDA)</h2>
-
-**Negative or Zero Values Detected:**
-- Gross Profit: Min -52,002.78 (loss-making sales)
-- Profit Margin: Min -∞ (sales at zero or below cost)
-- Unsold Inventory: Indicating slow-moving stock
-
-**Outliers Identified:**
-- High Freight Costs (up to 257K)
-- Large Purchase/Actual Prices
-
-**Correlation Analysis:**
-- Weak between Purchase Price & Profit
-- Strong between Purchase Qty & Sales Qty (0.999)
-- Negative between Profit Margin & Sales Price (-0.179)
-
----
-<h2><a class="anchor" id="research-questions--key-findings"></a>Research Questions & Key Findings</h2>
-
-1. **Brands for Promotions**: 198 brands with low sales but high profit margins
-2. **Top Vendors**: Top 10 vendors = 65.69% of purchases → risk of over-reliance
-3. **Bulk Purchasing Impact**: 72% cost savings per unit in large orders
-4. **Inventory Turnover**: $2.71M worth of unsold inventory
-5. **Vendor Profitability**:
-   - High Vendors: Mean Margin = 31.17%
-   - Low Vendors: Mean Margin = 41.55%
-6. **Hypothesis Testing**: Statistically significant difference in profit margins → distinct vendor strategies
-
----
-<h2><a class="anchor" id="dashboard"></a>Dashboard</h2>
-
-- Power BI Dashboard shows:
-  - Vendor-wise Sales and Margins
-  - Inventory Turnover
-  - Bulk Purchase Savings
-  - Performance Heatmaps
-
-![Vendor Performance Dashboard](images/dashboard.png)
 
 ---
 <h2><a class="anchor" id="how-to-run-this-project"></a>How to Run This Project</h2>
@@ -129,30 +152,23 @@ vendor-performance-analysis/
 ```bash
 git clone https://github.com/yourusername/vendor-performance-analysis.git
 ```
-3. Load the CSVs and ingest into database:
+2. Train and Save best fit Models:
 ```bash
-python scripts/ingestion_db.py
+python freight_cost_prediction/train.py
+python invoice_flagging/train.py
 ```
-4. Create vendor summary table:
+3. Test models:
 ```bash
-python scripts/get_vendor_summary.py
+python inference/predict_freight.py
+python inference/predict_invoice.py
 ```
-5. Open and run notebooks:
-   - `notebooks/exploratory_data_analysis.ipynb`
-   - `notebooks/vendor_performance_analysis.ipynb`
-6. Open Power BI Dashboard:
-   - `dashboard/vendor_performance_dashboard.pbix`
+4. Open Application:
+```bash
+streamlit run app.py
+```
 
 ---
-<h2><a class="anchor" id="final-recommendations"></a>Final Recommendations</h2>
 
-- Diversify vendor base to reduce risk
-- Optimize bulk order strategies
-- Reprice slow-moving, high-margin brands
-- Clear unsold inventory strategically
-- Improve marketing for underperforming vendors
-
----
 <h2><a class="anchor" id="author--contact"></a>Author & Contact</h2>
 
 **Aditya Bathre**  

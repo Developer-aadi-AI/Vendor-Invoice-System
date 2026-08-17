@@ -5,26 +5,26 @@ Freight Cost Prediction and Invoice Risk Flagging
 ---
 
 ## 📌 Table of Contents
-- <a href="#project overview">Project Overview</a>
-- <a href="#business objective">Business Objectives</a>
-- <a href="#data sources">Data Sources</a>
-- <a href="#Exploratory Data Analysis">Exploratory Data Analysis</a>
-- <a href="#Models Used">Models Used</a>
-- <a href="#Evaluation Metrics">Evaluation Metrics</a>
-- <a href="#Application">Application</a>
-- <a href="#project-structure">Project Structure</a>
-- <a href="#How to run this project">How to run this project</a>
-- <a href="#author--contact">Author & Contact</a>
+- [Project Overview](#project-overview)
+- [Business Objectives](#business-objective)
+- [Data Sources](#data-sources)
+- [Exploratory Data Analysis](#exploratory-data-analysis)
+- [Models Used](#models-used)
+- [Evaluation Metrics](#evaluation-metrics)
+- [Application](#application)
+- [Project Structure](#project-structure)
+- [How to Run This Project](#how-to-run-this-project)
+- [Author & Contact](#author--contact)
 
 ---
-<h2><a class="anchor" id="Project Overview"></a>Project Overview</h2>
+## Project Overview
 
 This project implements an end-to-end machine learning system designed to support finance teams by:
 
 1. Predicting expected freight cost for vendor invoices.
 2. Flagging high-risk invoices that require manual review due to abnormal cost, freight, or operational patterns.
 ---
-<h2><a class="anchor" id="Business Objective"></a>Business Objective</h2>
+## Business Objective
 
 # 1. Freight Cost Prediction (Regression)
 
@@ -50,7 +50,7 @@ patterns.
 ![Invoice Flagging Snapshot](images/Flagging_System.png)
 
 ---
-<h2><a class="anchor" id="Data Sources"></a>Data Sources</h2>
+## Data Sources
 
 Data is stored in a relational SQLite database (inventory.db) with the following tables:
 
@@ -62,7 +62,7 @@ Data is stored in a relational SQLite database (inventory.db) with the following
 SQL aggregation is used to generate invoice-level features.
 ---
 
-<h2><a class="anchor" id="Exploratory Data Analysis"></a>Exploratory Data Analysis</h2>
+## Exploratory Data Analysis
 
 EDA focuses on business-driven questions, such as:
 * Do flagged invoices have higher financial exposure?
@@ -71,7 +71,7 @@ EDA focuses on business-driven questions, such as:
 Statistical tests (t-tests) are used to confirm that flagged invoices differ meaningfully from normal invoices.
 
 ---
-<h2><a class="anchor" id="Models Used"></a>Models Used</h2>
+## Models Used
 
 # Regression (Freight Prediction)
 
@@ -87,7 +87,7 @@ Statistical tests (t-tests) are used to confirm that flagged invoices differ mea
 
 Hyperparameter tuning is performed using GridSearchCV with F1-score to handle class imbalance.
 ---
-<h2><a class="anchor" id="Evaluation Metrics"></a>Evaluation Metrics</h2>
+## Evaluation Metrics
 
 # Freight Prediction
 * MAE
@@ -100,7 +100,7 @@ Hyperparameter tuning is performed using GridSearchCV with F1-score to handle cl
 * Classification report
 * Feature importance analysis
 ---
-<h2><a class="anchor" id="Application"></a>Application</h2>
+## Application
 A Streamlit application demonstrates the complete pipeline:
 * Input invoice details
 * Predict expected freight
@@ -108,7 +108,7 @@ A Streamlit application demonstrates the complete pipeline:
 * Provide human-readable explanations
 
 ---
-<h2><a class="anchor" id="project-structure"></a>project-structure</h2>
+## Project Structure
 
 ```
 inventory-invoice-analytics/
@@ -146,7 +146,7 @@ inventory-invoice-analytics/
 
 
 ---
-<h2><a class="anchor" id="how-to-run-this-project"></a>How to Run This Project</h2>
+## How to Run This Project
 
 1. Clone the repository:
 ```bash
@@ -169,7 +169,7 @@ streamlit run app.py
 
 ---
 
-<h2><a class="anchor" id="author--contact"></a>Author & Contact</h2>
+## Author & Contact
 
 **Aditya Bathre**  
 Software Developer AIML  
